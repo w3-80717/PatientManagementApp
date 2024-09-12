@@ -1,0 +1,19 @@
+# Ignore .env file
+**/.env
+
+# Ignore node_modules, build, and coverage directories
+**/node_modules/
+**/build/
+**/coverage/
+
+# Ignore logs and pid files
+**/logs/
+**/*.pid
+
+# Ignore OS and editor files
+**/.DS_Store
+**/.idea/
+**/.vscode/
+
+# Ignore any .env files in subdirectories
+**/**/*.env
