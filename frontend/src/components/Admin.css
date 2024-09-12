@@ -1,0 +1,32 @@
+/* components/Admin.css */
+.admin-container {
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .admin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 300px;
+    margin: auto;
+  }
+  
+  .admin-form input, .admin-form select {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .admin-form button {
+    background-color: black;
+    color: white;
+    padding: 0.7rem;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .admin-form button:hover {
+    background-color: #444;
+  }
+  

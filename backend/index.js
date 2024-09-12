@@ -14,9 +14,10 @@ app.use(bodyParser.json({ limit: '50mb' })); // To handle large base64 photo dat
 app.use(cors()); // Enable CORS for all origins
 
 // Connect to MongoDB
+//  
 mongoose.connect(process.env.MONGO_URI, {
-  user:process.env.USER,
-  pass:process.env.PASS,
+  user: process.env.MONGO_USER,
+    pass: process.env.MONGO_PASS,
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })

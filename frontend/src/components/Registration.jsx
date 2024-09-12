@@ -35,9 +35,10 @@ const Registration = () => {
   };
 
   return (
-    <div>
+    <div className="registration-container">
+
       <h1>Patient Registration</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="registration-form">
         <input type="text" name="name" placeholder="Patient Name" onChange={handleChange} required />
         <input type="number" name="age" placeholder="Age" onChange={handleChange} required />
         <input type="text" name="mobile" placeholder="Mobile No" onChange={handleChange} required />

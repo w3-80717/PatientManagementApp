@@ -1,0 +1,29 @@
+/* components/Registration.css */
+.registration-container {
+    padding: 2rem;
+  }
+  
+  .registration-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .registration-form input, .registration-form textarea {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .registration-form button {
+    background-color: black;
+    color: white;
+    padding: 0.7rem;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .registration-form button:hover {
+    background-color: #444;
+  }
+  

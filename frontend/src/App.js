@@ -1,27 +1,36 @@
 // App.js
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
 import Registration from './components/Registration';
 import PatientInfo from './components/PatientInfo';
-import Navbar from './components/Navbar';
+import Admin from './components/Admin';
+import Login from './components/Login';
+import Dashboard from './components/Dashboard';
 
-const App = () => {
+function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
   return (
     <Router>
-      {/* Optional: Navbar component */}
-      <Navbar />
-      <div className="container">
-        {/* Routes for navigation */}
-        <Routes>
-          {/* Route for Registration Page */}
-          <Route path="/" element={<Registration />} />
-
-          {/* Route for Patient Info (Barcode Scanner) */}
-          <Route path="/patient-info" element={<PatientInfo />} />
-        </Routes>
-      </div>
+      {isLoggedIn && <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} isAdmin={isAdmin} />}
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<Login setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} />} />
+        
+        {/* Private Routes - visible after login */}
+        {isLoggedIn && (
+          <>
+            <Route path="/registration" element={<Registration />} />
+            <Route path="/patient-info" element={<PatientInfo />} />
+            {isAdmin && <Route path="/admin" element={<Admin />} />}
+            <Route path="/dashboard" element={<Dashboard />} />
+          </>
+        )}
+      </Routes>
     </Router>
   );
-};
+}
 
 export default App;
