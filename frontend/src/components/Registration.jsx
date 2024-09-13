@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Webcam from 'react-webcam';
 import axios from 'axios';
+import './Registration.css';
+
 
 const Registration = () => {
   const [patient, setPatient] = useState({
@@ -30,7 +32,7 @@ const Registration = () => {
       ...patient,
       photo,
     };
-    await axios.post('http://localhost:5000/api/patients/register', formData);
+    await axios.post('/api/patients/register', formData);
     alert('Patient Registered Successfully');
   };
 

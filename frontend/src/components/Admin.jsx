@@ -1,5 +1,5 @@
-// components/Admin.js
 import React, { useState } from 'react';
+import axios from 'axios';
 import './Admin.css';
 
 const Admin = () => {
@@ -13,12 +13,16 @@ const Admin = () => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Logic to send the new user to the backend
-    console.log('New user added:', user);
-    alert(`User ${user.username} added successfully!`);
-    setUser({ username: '', password: '', role: 'user' });
+    try {
+      await axios.post('/api/users/register', user);
+      alert('User registered successfully!');
+      setUser({ username: '', password: '', role: 'user' });
+    } catch (error) {
+      alert('An error occurred while registering the user');
+      console.error(error);
+    }
   };
 
   return (

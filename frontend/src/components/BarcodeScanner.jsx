@@ -1,6 +1,8 @@
 // components/BarcodeScanner.js
 import React, { useEffect, useRef } from 'react';
 import Quagga from 'quagga'; // Import QuaggaJS
+import './BarcodeScanner.css';
+
 
 const BarcodeScanner = ({ onDetected }) => {
   const scannerRef = useRef(null);

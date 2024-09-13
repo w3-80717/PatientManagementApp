@@ -1,49 +1,87 @@
 /* components/Navbar.css */
 .navbar {
-    background-color: black;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
-  }
-  
-  .navbar-logo img {
-    height: 40px;
-  }
-  
+  background-color: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+}
+
+.navbar-logo img {
+  height: 40px;
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+}
+
+.navbar-links li {
+  display: inline;
+}
+
+.navbar-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+.navbar-links a:hover {
+  text-decoration: underline;
+}
+
+/* Logout button styling */
+.logout-button {
+  background-color: blue;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.logout-button:hover {
+  background-color: darkblue;
+}
+
+/* Mobile Menu Styles */
+.mobile-menu-button {
+  display: none; /* Hidden by default */
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.mobile-menu-button:hover {
+  background-color: #444;
+}
+
+@media (max-width: 768px) {
   .navbar-links {
-    list-style: none;
-    display: flex;
-    gap: 2rem;
+    display: none; /* Hide the links by default on mobile */
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
   }
-  
+
+  .navbar-links.active {
+    display: flex; /* Show links when menu is active */
+  }
+
   .navbar-links li {
-    display: inline;
+    margin: 0.5rem 0;
   }
-  
-  .navbar-links a {
-    color: white;
-    text-decoration: none;
-    font-size: 1.2rem;
+
+  .mobile-menu-button {
+    display: block; /* Show menu button on mobile */
   }
-  
-  .navbar-links a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Styling the logout button */
-  .logout-button {
-    background-color: blue;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    font-size: 1.1rem;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  .logout-button:hover {
-    background-color: darkblue;
-  }
-  
+}

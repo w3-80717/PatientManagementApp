@@ -1,9 +1,10 @@
 // components/Navbar.js
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = ({ isLoggedIn, setIsLoggedIn, isAdmin }) => {
+  const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -16,13 +17,15 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, isAdmin }) => {
       <div className="navbar-logo">
         <img src="/logo.png" alt="Logo" />
       </div>
-      <ul className="navbar-links">
+      <button className="mobile-menu-button" onClick={() => setMenuOpen(!menuOpen)}>
+        ☰
+      </button>
+      <ul onClick={() => setMenuOpen(false)}className={`navbar-links ${menuOpen ? 'active' : ''}`}>
         <li><Link to="/registration">Patient Registration</Link></li>
         <li><Link to="/patient-info">Patient Information</Link></li>
         {isAdmin && <li><Link to="/admin">Add User</Link></li>}
+        {isAdmin && <li><Link to="/add-prasad">Add Prasad</Link></li>}
         <li><Link to="/analytics">Data Analytics</Link></li>
-        
-        {/* Conditionally render login or logout */}
         {!isLoggedIn ? (
           <li><Link to="/login">User Login</Link></li>
         ) : (

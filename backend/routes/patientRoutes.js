@@ -36,27 +36,42 @@ router.get('/:barcode', async (req, res) => {
   }
 });
 
-// Route to manage prasad distribution
+// Add a new route to update prasad taken status
 router.post('/:barcode/prasad', async (req, res) => {
   try {
+    const { prasadId } = req.body; // The prasad to mark as taken
+
     const patient = await Patient.findOne({ barcode: req.params.barcode });
 
     if (!patient) {
       return res.status(404).json({ error: 'Patient not found' });
     }
 
-    if (patient.prasadReceived) {
-      return res.status(400).json({ message: 'Prasad has already been distributed to this patient' });
+    // Check if prasad was already taken
+    if (patient.prasadsTaken.includes(prasadId)) {
+      return res.status(400).json({ message: 'This prasad has already been taken' });
     }
 
-    patient.prasadReceived = true;
+    // Mark prasad as taken
+    patient.prasadsTaken.push(prasadId);
     await patient.save();
 
-    res.status(200).json({ message: 'Prasad distributed successfully' });
+    res.status(200).json({ message: 'Prasad marked as taken successfully' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'An error occurred while distributing prasad' });
+    res.status(500).json({ error: 'An error occurred while updating prasad status' });
   }
 });
+// Route to fetch all patients
+router.get('/', async (req, res) => {
+  try {
+    const patients = await Patient.find();
+    res.status(200).json(patients);
+  } catch (error) {
+    console.error('Error fetching patients:', error);
+    res.status(500).json({ error: 'An error occurred while fetching patients' });
+  }
+});
+
 
 module.exports = router;
