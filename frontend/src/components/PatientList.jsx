@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useTable, useSortBy } from 'react-table';
 
-const DataAnalytics = ({ isAdmin }) => {
+const PatientList = ({ isAdmin }) => {
   const [patients, setPatients] = useState([]);
   const [prasads, setPrasads] = useState([]);
 
@@ -153,7 +153,7 @@ const DataAnalytics = ({ isAdmin }) => {
 
   return (
     <div style={{ overflow: 'scroll' }}>
-      <h1>Data Analytics</h1>
+      <h1>Patient List</h1>
       <table {...getTableProps()} style={{ width: '100%', borderCollapse: 'collapse' }}>
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -190,4 +190,4 @@ const DataAnalytics = ({ isAdmin }) => {
   );
 };
 
-export default DataAnalytics;
+export default PatientList;

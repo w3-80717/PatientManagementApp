@@ -74,5 +74,22 @@ router.get('/',authenticateToken, async (req, res) => {
   }
 });
 
+router.delete('/:id', authenticateToken, async (req, res) => {
+  try {
+    const patientId = req.params.id;
+    
+    // Find and delete patient by _id or barcode
+    const patient = await Patient.findByIdAndDelete(patientId);
+
+    if (!patient) {
+      return res.status(404).json({ message: 'Patient not found' });
+    }
+
+    res.status(200).json({ message: 'Patient deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to delete patient' });
+  }
+});
 
 module.exports = router;

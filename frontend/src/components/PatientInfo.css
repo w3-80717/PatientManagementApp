@@ -47,4 +47,16 @@
       font-size: 0.9rem;
     }
   }
-  
+  /* In your main CSS file */
+.delete-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.delete-button:hover {
+  background-color: darkred;
+}

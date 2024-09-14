@@ -8,6 +8,7 @@ import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import AddPrasad from './components/AddPrasad';
 import DataAnalytics from './components/DataAnalytics';
+import PatientList from './components/PatientList';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
@@ -47,6 +48,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             {isAdmin && <Route path="/add-prasad" element={<AddPrasad />} />}
             <Route path="/analytics" element={<DataAnalytics />} />
+            <Route path="/patientlist" element={<PatientList/>} />
             
           </>
         )}

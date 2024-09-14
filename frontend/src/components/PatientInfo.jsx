@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './PatientInfo.css';
 import BarcodeScanner from './BarcodeScanner';
@@ -9,7 +10,27 @@ const PatientInfo = ({ isAdmin }) => {
   const [prasads, setPrasads] = useState([]);
   const [isScanning, setIsScanning] = useState(false); // Manages scanning state
   const [scanCompleted, setScanCompleted] = useState(false);
+  const navigate = useNavigate();
 
+  const handleDeletePatient = async (patientId) => {
+    if (window.confirm('Are you sure you want to delete this patient?')) {
+      try {
+        const token = localStorage.getItem('token');
+        await axios.delete(`http://localhost:5000/api/patients/${patientId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Send token in the request
+          },
+        });
+        
+        // Redirect to some other page or refresh the page
+        alert('Patient deleted successfully');
+        navigate('/dashboard'); // Redirect to dashboard or patients list
+      } catch (error) {
+        console.error('Error deleting patient:', error);
+        alert('Failed to delete patient');
+      }
+    }
+  };
   useEffect(() => {
     // Fetch all prasads
     const fetchPrasads = async () => {
@@ -46,7 +67,10 @@ const PatientInfo = ({ isAdmin }) => {
 
   const handlePrasadUpdate = async (prasadId) => {
     try {
-      await axios.post(`/api/prasads/updatePrasad/${patient._id}`, { prasadId });
+      const token = localStorage.getItem("token");
+      await axios.post(`/api/prasads/updatePrasad/${patient._id}`, { prasadId }, {  headers: {
+        Authorization: `Bearer ${token}`, // Include the token in the request
+      }});
       alert('Prasad status updated');
       fetchPatientInfo(barcode); // Refresh patient info
     } catch (error) {
@@ -118,6 +142,14 @@ const PatientInfo = ({ isAdmin }) => {
               </li>
             ))}
           </ul>
+           {/* Add Delete Button (only for admin or authorized users) */}
+      <button
+        className="delete-button"
+        onClick={() => handleDeletePatient(patient._id)}
+        style={{ backgroundColor: 'red', color: 'white', padding: '10px', marginTop: '20px' }}
+      >
+        Delete Patient
+      </button>
         </div>
       )}
     </div>
