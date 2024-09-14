@@ -2,11 +2,12 @@ const express = require('express');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
+const { authenticateToken, requireAdmin } = require('../middleware/authMiddleware'); // Import the middleware
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret';
 
 // Route to register a new user
-router.post('/register', async (req, res) => {
+router.post('/register',authenticateToken, requireAdmin, async (req, res) => {
   const { username, password, role } = req.body;
   try {
     const newUser = new User({ username, password, role });

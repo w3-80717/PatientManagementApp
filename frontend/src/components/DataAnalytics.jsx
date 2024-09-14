@@ -10,10 +10,16 @@ const DataAnalytics = ({ isAdmin }) => {
     // Fetch patients and prasads data from the backend
     const fetchData = async () => {
       try {
-        const patientsRes = await axios.get('/api/patients');
+        const token = localStorage.getItem("token"); // Get the token from localStorage
+
+        const patientsRes = await axios.get('/api/patients', {  headers: {
+                Authorization: `Bearer ${token}`, // Include the token in the request
+              }});
         setPatients(patientsRes.data);
 
-        const prasadsRes = await axios.get('/api/prasads');
+        const prasadsRes = await axios.get('/api/prasads', {  headers: {
+                Authorization: `Bearer ${token}`, // Include the token in the request
+              }});
         setPrasads(prasadsRes.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -96,7 +102,7 @@ const DataAnalytics = ({ isAdmin }) => {
   );
 
   return (
-    <div>
+    <div style={{overflow: 'scroll'}}>
       <h1>Data Analytics</h1>
       <table {...getTableProps()} style={{ width: '100%', borderCollapse: 'collapse' }}>
         <thead>

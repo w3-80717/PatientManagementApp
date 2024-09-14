@@ -1,19 +1,25 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 const AddPrasad = () => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
 
   const handleAddPrasad = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/prasads/add', { name, description });
-      alert('Prasad added successfully');
-      setName('');
-      setDescription('');
+      const token = localStorage.getItem("token"); // Get the token from localStorage
+      await axios.post("/api/prasads/add", {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include the token in the request
+        },
+        body: { name, description },
+      });
+      alert("Prasad added successfully");
+      setName("");
+      setDescription("");
     } catch (error) {
-      console.error('Error adding prasad:', error);
+      console.error("Error adding prasad:", error);
     }
   };
 

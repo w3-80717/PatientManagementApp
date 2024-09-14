@@ -16,7 +16,10 @@ const Admin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/users/register', user);
+      const token = localStorage.getItem("token"); // Get the token from localStorage
+      await axios.post('/api/users/register', user, {  headers: {
+        Authorization: `Bearer ${token}`, // Include the token in the request
+      }});
       alert('User registered successfully!');
       setUser({ username: '', password: '', role: 'user' });
     } catch (error) {

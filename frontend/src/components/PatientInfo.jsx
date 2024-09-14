@@ -13,7 +13,11 @@ const PatientInfo = ({ isAdmin }) => {
   useEffect(() => {
     // Fetch all prasads
     const fetchPrasads = async () => {
-      const response = await axios.get('/api/prasads');
+      const token = localStorage.getItem("token"); // Get the token from localStorage
+
+      const response = await axios.get('/api/prasads', {  headers: {
+              Authorization: `Bearer ${token}`, // Include the token in the request
+            }});
       setPrasads(response.data);
     };
     fetchPrasads();
@@ -30,7 +34,10 @@ const PatientInfo = ({ isAdmin }) => {
 
   const fetchPatientInfo = async (barcode) => {
     try {
-      const response = await axios.get(`/api/patients/${barcode}`);
+      const token = localStorage.getItem("token"); // Get the token from localStorage
+      const response = await axios.get(`/api/patients/${barcode}`, {  headers: {
+              Authorization: `Bearer ${token}`, // Include the token in the request
+            }});
       setPatient(response.data);
     } catch (error) {
       console.error('Error fetching patient info:', error);

@@ -2,9 +2,10 @@ const express = require('express');
 const Prasad = require('../models/Prasad');
 const Patient = require('../models/Patient');
 const router = express.Router();
+const { authenticateToken, requireAdmin } = require('../middleware/authMiddleware'); // Import the middleware
 
 // Route to add a new Prasad (Admin Only)
-router.post('/add', async (req, res) => {
+router.post('/add',authenticateToken, requireAdmin, async (req, res) => {
   try {
     const { name, description } = req.body;
     const newPrasad = new Prasad({ name, description });
@@ -16,7 +17,7 @@ router.post('/add', async (req, res) => {
 });
 
 // Route to get all Prasads
-router.get('/', async (req, res) => {
+router.get('/',authenticateToken, async (req, res) => {
   try {
     const prasads = await Prasad.find();
     res.status(200).json(prasads);
@@ -26,7 +27,7 @@ router.get('/', async (req, res) => {
 });
 
 // Route to update patient's prasad status
-router.post('/updatePrasad/:patientId', async (req, res) => {
+router.post('/updatePrasad/:patientId',authenticateToken, async (req, res) => {
   try {
     const { prasadId } = req.body;
     const patient = await Patient.findById(req.params.patientId);

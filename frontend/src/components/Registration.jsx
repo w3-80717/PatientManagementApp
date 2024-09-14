@@ -16,7 +16,11 @@ const Registration = () => {
   });
   const [photo, setPhoto] = useState(null);
   const webcamRef = React.useRef(null);
-
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+ 
+   const videoConstraints = {
+     facingMode: isMobile ? { exact: 'environment' } : 'user',
+   };
   const capturePhoto = () => {
     const imageSrc = webcamRef.current.getScreenshot();
     setPhoto(imageSrc);
@@ -32,7 +36,8 @@ const Registration = () => {
       ...patient,
       photo,
     };
-    await axios.post('/api/patients/register', formData);
+    let token = localStorage.getItem("token");
+    await axios.post('/api/patients/register', formData, { headers: {"Authorization":`Bearer ${token}`} });
     alert('Patient Registered Successfully');
   };
 
@@ -50,7 +55,7 @@ const Registration = () => {
         <input type="text" name="barcode" placeholder="Barcode Number" onChange={handleChange} required />
         
         {/* Capture Patient Photo */}
-        <Webcam ref={webcamRef} screenshotFormat="image/jpeg" />
+        <Webcam ref={webcamRef} videoConstraints={videoConstraints} screenshotFormat="image/jpeg" />
         <button type="button" onClick={capturePhoto}>Capture Photo</button>
 
         {/* Submit form */}

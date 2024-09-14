@@ -1,14 +1,15 @@
 // routes/patientRoutes.js
 const express = require('express');
 const Patient = require('../models/Patient');
+const jwt = require('jsonwebtoken');
+const { authenticateToken, requireAdmin } = require('../middleware/authMiddleware'); // Import the middleware
 
 const router = express.Router();
 
 // Route to register a new patient
-router.post('/register', async (req, res) => {
+router.post('/register',authenticateToken, async (req, res) => {
   try {
     const { name, age, mobile, address, city, state, barcode, photo } = req.body;
-  console.log("Give data")
     // Create a new patient document
     const newPatient = new Patient({ name, age, mobile, address, city, state, barcode, photo });
     await newPatient.save();
@@ -21,7 +22,7 @@ router.post('/register', async (req, res) => {
 });
 
 // Route to fetch patient details by barcode
-router.get('/:barcode', async (req, res) => {
+router.get('/:barcode',authenticateToken, async (req, res) => {
   try {
     const patient = await Patient.findOne({ barcode: req.params.barcode });
 
@@ -37,7 +38,7 @@ router.get('/:barcode', async (req, res) => {
 });
 
 // Add a new route to update prasad taken status
-router.post('/:barcode/prasad', async (req, res) => {
+router.post('/:barcode/prasad',authenticateToken, async (req, res) => {
   try {
     const { prasadId } = req.body; // The prasad to mark as taken
 
@@ -63,7 +64,7 @@ router.post('/:barcode/prasad', async (req, res) => {
   }
 });
 // Route to fetch all patients
-router.get('/', async (req, res) => {
+router.get('/',authenticateToken, async (req, res) => {
   try {
     const patients = await Patient.find();
     res.status(200).json(patients);
